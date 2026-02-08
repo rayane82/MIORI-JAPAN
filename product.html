@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIORI | Produit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --miori-dark: #121212; --miori-bg-logo: #faf6f2; --miori-btn: #d8d2ce; --miori-accent: #ab9083; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #fdfcfb; color: var(--miori-dark); }
+        h1, h3, .serif { font-family: 'Playfair Display', serif; }
+        header { background-color: var(--miori-bg-logo) !important; }
+        .btn-miori { background-color: var(--miori-btn); color: var(--miori-dark); padding: 1rem 3rem; text-transform: uppercase; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; transition: 0.3s; border: 1px solid var(--miori-btn); }
+        .btn-miori:hover:not(:disabled) { background-color: transparent; }
+        .btn-miori:disabled { opacity: 0.5; cursor: not-allowed; }
+        .stock-badge { font-size: 9px; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; padding: 4px 8px; border-radius: 2px; }
+        .stock-in { color: #10b981; background-color: #ecfdf5; }
+        .stock-out { color: #ef4444; background-color: #fef2f2; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="fixed w-full top-0 z-50 border-b border-black/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center"><img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-20 md:h-24"></a>
+            <div class="flex items-center space-x-6"><a href="cart.html" class="relative text-[#ab9083]"><i class="fa-solid fa-bag-shopping text-xl"></i><span id="cart-count" class="cart-badge">0</span></a></div>
+        </div>
+    </header>
+
+    <main id="product-page" class="flex-grow pt-44 pb-16 container mx-auto px-6">
+        <!-- Content Loaded from Script -->
+    </main>
+
+    <script>
+        const PRODUCTS = [
+            { id: 1, name: "Bague Nami", desc: "Élégance marine et pureté.", longDesc: "La Bague Nami capture le mouvement fluide des vagues japonaises. Conçue pour celles qui cherchent une pièce à la fois forte et délicate.", price: 39, image: "https://i.postimg.cc/vZddgjXS/Gemini-Generated-Image-zdtqa6zdtqa6zdtq-Photoroom.png", inStock: true },
+            { id: 2, name: "Bague Chiyo", desc: "Finesse ancestrale et éclat discret.", longDesc: "Hommage à l'éternité, la Bague Chiyo se distingue par son design intemporel. Un bijou minimaliste.", price: 35, image: "https://i.postimg.cc/Bv0Dzqpy/unnamed-(18)-Photoroom.png", inStock: true },
+            { id: 3, name: "Mini Masque hydratant", desc: "Hydratation instantanée.", longDesc: "Le secret d'une peau radieuse. Sa formule concentrée pénètre instantanément.", price: 12, image: "https://i.postimg.cc/LXrxQJC2/unnamed-(20)-Photoroom-(1).png", inStock: true },
+            { id: 4, name: "Collier Kasumi", desc: "Éclat céleste.", longDesc: "Inspiré par la brume matinale, le Collier Kasumi est une pièce d'une finesse rare.", price: 45, image: "https://i.postimg.cc/3NG9p3Z1/unnamed-(21)-Photoroom.png", inStock: false },
+            { id: 5, name: "Boucles Selma", desc: "Raffinement pour vos soirées.", longDesc: "Les boucles Selma marient modernité et élégance classique. Accessoire parfait pour sublimer votre routine beauté.", price: 39, image: "https://i.postimg.cc/tghXr6Cx/unnamed-(22)-Photoroom.png", inStock: true },
+            { id: 6, name: "Mini Box K-Beauty Avocado", desc: "Nutrition intense.", longDesc: "L'avocat nourrit votre peau en profondeur pour un teint revitalisé.", price: 59, image: "https://i.postimg.cc/FR3Dk9pk/unnamed-(23)-Photoroom.png", inStock: true },
+            { id: 7, name: "Mini Box K-Beauty Peach", desc: "Éclat fruité.", longDesc: "Retrouvez l'éclat d'un teint de pêche. Soin idéal pour une peau fraîche.", price: 59, image: "https://i.postimg.cc/FHzpgbGv/unnamed-(24)-Photoroom.png", inStock: true },
+            { id: 8, name: "Sakura Silk Cream", desc: "Onctuosité de la soie.", longDesc: "Infusée aux fleurs de cerisier. Sa texture soyeuse enveloppe la peau.", price: 49, image: "https://i.postimg.cc/RZm6vv6X/unnamed-(25)-Photoroom.png", inStock: true },
+            { id: 9, name: "Bague Nouha", desc: "Éclat doré.", longDesc: "La Bague Nouha est une célébration de la modernité. Design unique.", price: 39, image: "https://i.postimg.cc/261wgnLC/unnamed-(28)-Photoroom.png", inStock: true }
+        ];
+
+        const app = {
+            cart: JSON.parse(localStorage.getItem('miori_cart_2026')) || [],
+            init() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = parseInt(urlParams.get('id'));
+                const p = PRODUCTS.find(x => x.id === id);
+                if (!p) { location.href='shop.html'; return; }
+                this.renderProduct(p);
+                this.updateCartCount();
+            },
+            updateCartCount() { const badge = document.getElementById('cart-count'); if(badge) badge.innerText = this.cart.reduce((a, b) => a + b.qty, 0); },
+            addToCart(id) {
+                const p = PRODUCTS.find(x => x.id === id);
+                const existing = this.cart.find(item => item.id === id);
+                if (existing) existing.qty += 1; else this.cart.push({ ...p, qty: 1 });
+                localStorage.setItem('miori_cart_2026', JSON.stringify(this.cart));
+                this.updateCartCount();
+                this.showNote(p);
+            },
+            showNote(p) {
+                const note = document.createElement('div');
+                note.className = 'fixed bottom-10 right-10 bg-white p-4 border flex items-center space-x-4 shadow-2xl z-50';
+                note.innerHTML = `<img src="${p.image}" class="w-12 h-16 object-cover"><div><p class="text-[10px] uppercase font-bold text-[#ab9083]">Ajouté au panier</p><p class="text-[11px] font-bold">${p.name}</p><a href="cart.html" class="text-[9px] uppercase border-b border-black">Voir le panier</a></div>`;
+                document.body.appendChild(note); setTimeout(() => note.remove(), 4000);
+            },
+            renderProduct(p) {
+                document.getElementById('product-page').innerHTML = `
+                    <button onclick="location.href='shop.html'" class="text-[10px] uppercase tracking-widest mb-12 flex items-center space-x-2 opacity-50"><i class="fa-solid fa-arrow-left"></i><span>Retour Boutique</span></button>
+                    <div class="flex flex-col md:flex-row gap-16 lg:gap-24">
+                        <div class="w-full md:w-1/2 aspect-[4/5] bg-gray-50 overflow-hidden"><img src="${p.image}" class="w-full h-full object-cover"></div>
+                        <div class="w-full md:w-1/2">
+                            <h1 class="text-4xl md:text-5xl serif mb-4 italic">${p.name}</h1>
+                            <p class="text-2xl font-light mb-4">${p.price} MAD</p>
+                            <div class="mb-8"><span class="stock-badge ${p.inStock?'stock-in':'stock-out'}">${p.inStock?'En stock':'Épuisé'}</span></div>
+                            <div class="border-t border-b border-black/5 py-10 mb-10"><h3 class="text-[10px] uppercase tracking-widest font-bold mb-4">Description</h3><p class="text-gray-500 text-sm leading-relaxed">${p.longDesc}</p></div>
+                            <button onclick="app.addToCart(${p.id})" ${!p.inStock?'disabled':''} class="btn-miori w-full md:w-auto">${p.inStock?'Ajouter au Panier':'Épuisé'}</button>
+                            <div class="mt-16 opacity-40 text-[10px] uppercase font-bold space-y-4"><p><i class="fa-solid fa-truck-fast mr-2"></i>Livraison Oujda</p><p><i class="fa-solid fa-shield-halved mr-2"></i>Paiement sécurisé</p></div>
+                        </div>
+                    </div>`;
+            }
+        };
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>

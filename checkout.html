@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIORI | Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --miori-dark: #121212; --miori-bg-logo: #faf6f2; --miori-btn: #d8d2ce; --miori-accent: #ab9083; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #fdfcfb; }
+        h1, h3, .serif { font-family: 'Playfair Display', serif; }
+        header { background-color: var(--miori-bg-logo) !important; }
+        input:focus, textarea:focus { border-color: var(--miori-accent); outline: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="fixed w-full top-0 z-50 border-b border-black/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center"><img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-20 md:h-24"></a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-44 pb-16 container mx-auto px-6 max-w-5xl">
+        <h1 class="text-4xl serif mb-12 italic">Confirmation de commande</h1>
+        <div class="flex flex-col lg:flex-row gap-16">
+            <div class="flex-grow space-y-10">
+                <div class="bg-white p-8 border border-black/5 space-y-8">
+                    <h3 class="text-xs uppercase tracking-widest font-bold">Vos informations</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <input type="text" id="order-name" placeholder="Nom Complet" class="w-full bg-[#faf6f2] p-4 text-sm">
+                        <input type="tel" id="order-phone" placeholder="Téléphone WhatsApp" class="w-full bg-[#faf6f2] p-4 text-sm">
+                    </div>
+                </div>
+                <div class="bg-white p-8 border border-black/5 space-y-8">
+                    <h3 class="text-xs uppercase tracking-widest font-bold">Mode de livraison</h3>
+                    <div class="space-y-4">
+                        <div onclick="app.updateDelivery('pickup')" id="opt-pickup" class="p-4 cursor-pointer border bg-[#faf6f2] flex justify-between"><span>Retrait Gratuit</span><span>Gratuit</span></div>
+                        <div onclick="app.updateDelivery('home')" id="opt-home" class="p-4 cursor-pointer border bg-[#faf6f2] flex justify-between"><span>Livraison Oujda</span><span>+20 MAD</span></div>
+                        <div id="address-container" class="hidden"><textarea id="order-address" placeholder="Votre adresse à Oujda" class="w-full bg-[#faf6f2] p-4 text-sm mt-4"></textarea></div>
+                    </div>
+                </div>
+            </div>
+            <div id="checkout-sidebar" class="w-full lg:w-[400px]">
+                <!-- Dynamic Summary -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const app = {
+            cart: JSON.parse(localStorage.getItem('miori_cart_2026')) || [],
+            delivery: 'pickup',
+            init() { if(this.cart.length===0) location.href='shop.html'; this.render(); },
+            updateDelivery(m) { this.delivery = m; this.render(); },
+            render() {
+                const subtotal = this.cart.reduce((a, b) => a + (b.price * b.qty), 0);
+                const total = subtotal + (this.delivery === 'home' ? 20 : 0);
+                document.getElementById('opt-pickup').className = `p-4 cursor-pointer border bg-[#faf6f2] flex justify-between ${this.delivery==='pickup'?'border-black shadow-inner':'border-black/5'}`;
+                document.getElementById('opt-home').className = `p-4 cursor-pointer border bg-[#faf6f2] flex justify-between ${this.delivery==='home'?'border-black shadow-inner':'border-black/5'}`;
+                document.getElementById('address-container').classList.toggle('hidden', this.delivery === 'pickup');
+                
+                document.getElementById('checkout-sidebar').innerHTML = `
+                    <div class="bg-[#faf6f2] p-8 space-y-8 sticky top-44 border border-black/5">
+                        <h3 class="text-xs uppercase font-bold border-b border-black/5 pb-4">Récapitulatif</h3>
+                        <div class="space-y-4">${this.cart.map(i => `<div class="flex justify-between text-xs"><span>${i.name} (x${i.qty})</span><span>${i.price*i.qty} MAD</span></div>`).join('')}</div>
+                        <div class="border-t pt-4 space-y-2 text-xs">
+                            <div class="flex justify-between"><span>Sous-total</span><span>${subtotal} MAD</span></div>
+                            <div class="flex justify-between"><span>Livraison</span><span>${this.delivery==='home'?20:0} MAD</span></div>
+                        </div>
+                        <div class="text-base font-bold flex justify-between pt-4 border-t"><span>Total</span><span class="text-[#ab9083]">${total} MAD</span></div>
+                        <button onclick="app.sendOrder()" class="w-full py-5 bg-[#ab9083] text-white font-bold text-xs uppercase tracking-widest shadow-lg">Finaliser sur WhatsApp</button>
+                    </div>`;
+            },
+            sendOrder() {
+                const name = document.getElementById('order-name').value;
+                const phone = document.getElementById('order-phone').value;
+                if(!name || !phone) return alert("Nom et téléphone requis.");
+                let msg = `Commande MIORI ✨\n👤 Nom : ${name}\n📞 Tél : ${phone}\n🚚 Mode : ${this.delivery==='home'?'Livraison':'Retrait'}\n\n`;
+                this.cart.forEach(i => msg += `• ${i.qty} x ${i.name} = ${i.price*i.qty} MAD\n`);
+                msg += `\nTOTAL : ${this.cart.reduce((a,b)=>a+(b.price*b.qty),0) + (this.delivery==='home'?20:0)} MAD`;
+                window.open(`https://wa.me/212770216781?text=${encodeURIComponent(msg)}`, '_blank');
+            }
+        };
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>

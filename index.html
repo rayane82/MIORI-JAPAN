@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIORI | Accueil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --miori-dark: #121212; --miori-bg-logo: #faf6f2; --miori-btn: #d8d2ce; --miori-accent: #ab9083; --miori-sakura: #FFB7C5; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #fdfcfb; color: var(--miori-dark); scroll-behavior: smooth; overflow-x: hidden; }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        header, footer { background-color: var(--miori-bg-logo) !important; }
+        .sakura-petal { position: absolute; background-color: var(--miori-sakura); border-radius: 150% 0 150% 0; opacity: 0.7; pointer-events: none; z-index: 1; animation: fall linear infinite; }
+        @keyframes fall { 0% { transform: translate(0, -10px) rotate(0deg); opacity: 0; } 10% { opacity: 0.7; } 100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0; } }
+        .sakura-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .social-insta, .social-tiktok, .social-pinterest { color: var(--miori-accent); }
+        .btn-miori { background-color: var(--miori-btn); color: var(--miori-dark); padding: 0.8rem 2rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; font-weight: 600; transition: all 0.3s; border: 1px solid var(--miori-btn); }
+        .btn-miori:hover { background-color: transparent; }
+        .cart-badge { background-color: var(--miori-btn); color: var(--miori-dark); font-size: 0.65rem; padding: 2px 6px; border-radius: 99px; position: absolute; top: -8px; right: -10px; font-weight: 600; border: 1px solid rgba(0,0,0,0.05); }
+        .nav-link { position: relative; padding-bottom: 2px; }
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0; background-color: var(--miori-dark); transition: width 0.3s; }
+        .nav-link:hover::after { width: 100%; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .text-accent { color: var(--miori-accent); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div class="sakura-bg" id="sakura-container"></div>
+    <header class="fixed w-full top-0 z-50 border-b border-black/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-20 md:h-24">
+            </a>
+            <nav class="hidden md:flex space-x-10 text-[11px] uppercase tracking-[0.2em] font-medium">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="shop.html" class="nav-link">Boutique</a>
+                <a href="about.html" class="nav-link">À Propos</a>
+            </nav>
+            <div class="flex items-center space-x-6">
+                <a href="cart.html" class="relative hover:opacity-70 transition text-accent">
+                    <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </a>
+                <button class="md:hidden" onclick="app.toggleMenu()"><i class="fa-solid fa-bars-staggered"></i></button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#faf6f2] border-b border-black/5 py-8 px-10 space-y-6">
+            <a href="index.html" class="block uppercase tracking-[0.2em] text-xs">Accueil</a>
+            <a href="shop.html" class="block uppercase tracking-[0.2em] text-xs">Boutique</a>
+            <a href="about.html" class="block uppercase tracking-[0.2em] text-xs">À Propos</a>
+            <a href="cart.html" class="block uppercase tracking-[0.2em] text-xs">Panier</a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-32 md:pt-44 pb-16 relative z-10">
+        <section class="h-[80vh] md:h-[85vh] flex items-center justify-start relative overflow-hidden mb-20">
+            <img src="https://i.postimg.cc/cHChLx3L/Gemini-Generated-Image-q1gfmtq1gfmtq1gf-Photoroom.png" class="absolute inset-0 w-full h-full object-cover z-0" alt="Hero">
+            <div class="container mx-auto px-6 relative z-10 flex flex-col items-start mt-24">
+                <div class="max-w-xl text-left">
+                    <p class="text-[10px] uppercase tracking-[0.4em] mb-4 opacity-70 font-medium">Asian-Inspired lifestyle</p>
+                    <h2 class="text-3xl md:text-5xl serif mb-10 italic leading-tight">A lifestyle made for you</h2>
+                    <a href="shop.html" class="btn-miori shadow-2xl inline-block scale-110 hover:scale-115 transition-transform origin-left">Explorer la Collection</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-6 mb-32">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl serif mb-8 italic">L'esthétique de l'instant.</h2>
+                <p class="text-gray-500 leading-relaxed text-sm md:text-base mb-16 max-w-2xl mx-auto">
+                    MIORI déniche pour vous les dernières pépites du lifestyle asiatique. Des bijoux minimalistes aux soins innovants, nous sélectionnons des produits qui allient style, efficacité et prix accessible pour sublimer votre quotidien.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mt-20">
+                    <div class="text-center group">
+                        <div class="w-16 h-16 bg-[#faf6f2] rounded-full flex items-center justify-center mx-auto mb-6 border border-black/5"><i class="fa-solid fa-gem text-xl text-accent"></i></div>
+                        <h4 class="text-[11px] uppercase tracking-[0.2em] font-bold mb-4">Style & Prix</h4>
+                        <p class="text-[12px] text-gray-500">Le style asiatique au meilleur prix : Profitez de la qualité et du design oriental sans vous ruiner.</p>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-16 h-16 bg-[#faf6f2] rounded-full flex items-center justify-center mx-auto mb-6 border border-black/5"><i class="fa-solid fa-truck-fast text-xl text-accent"></i></div>
+                        <h4 class="text-[11px] uppercase tracking-[0.2em] font-bold mb-4">Livraison Oujda</h4>
+                        <p class="text-[12px] text-gray-500">Livraison rapide à Oujda : Vos pépites arrivent chez vous en un temps record.</p>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-16 h-16 bg-[#faf6f2] rounded-full flex items-center justify-center mx-auto mb-6 border border-black/5"><i class="fa-solid fa-spa text-xl text-accent"></i></div>
+                        <h4 class="text-[11px] uppercase tracking-[0.2em] font-bold mb-4">Lifestyle Unique</h4>
+                        <p class="text-[12px] text-gray-500">Tout votre lifestyle en un seul lieu : Skincare, bijoux et accessoires originaux avec une touche florale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-6 mb-32 relative">
+            <div class="flex items-center justify-between mb-12">
+                <h3 class="text-xs uppercase tracking-[0.5em] opacity-50 font-bold">Sélection du moment</h3>
+                <div class="flex space-x-4">
+                    <button onclick="app.scrollSlider(-1)" class="w-12 h-12 border border-black/10 rounded-full flex items-center justify-center hover:bg-black hover:text-white transition"><i class="fa-solid fa-chevron-left text-[12px]"></i></button>
+                    <button onclick="app.scrollSlider(1)" class="w-12 h-12 border border-black/10 rounded-full flex items-center justify-center hover:bg-black hover:text-white transition"><i class="fa-solid fa-chevron-right text-[12px]"></i></button>
+                </div>
+            </div>
+            <div id="home-slider" class="flex space-x-8 md:space-x-12 overflow-x-auto hide-scrollbar snap-x snap-mandatory pb-8">
+                <!-- Products dynamically loaded -->
+            </div>
+            <div class="mt-16 text-center">
+                <a href="shop.html" class="text-[10px] uppercase tracking-widest font-bold border-b border-black pb-2 hover:opacity-50 transition">Explorer toute la boutique</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+                <div class="md:col-span-1">
+                    <img src="https://i.postimg.cc/Njvr53jp/Design-sans-titre-(10).png" alt="MIORI" class="h-32 mb-2 mx-auto md:mx-0">
+                    <p class="opacity-50 font-medium tracking-[0.3em] uppercase text-[10px] mb-6">By Rayane</p>
+                    <p class="serif text-sm text-gray-500 italic max-w-xs mx-auto md:mx-0 uppercase tracking-widest">moments made yours</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Suivez-nous</h4>
+                    <div class="flex justify-center md:justify-start space-x-6 text-xl mb-8">
+                        <a href="#" class="social-insta"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-tiktok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="social-pinterest"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                    <p class="opacity-50 text-[10px] uppercase tracking-widest">&copy; 2026 MIORI.</p>
+                </div>
+                <div>
+                    <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold mb-6">Newsletter</h4>
+                    <p class="text-[10px] text-gray-500 mb-4 italic">Inscrivez-vous pour recevoir nos nouveautés en avance.</p>
+                    <form onsubmit="app.submitNewsletter(event)" class="relative">
+                        <input type="email" id="newsletter-email" required placeholder="votre@email.com" class="w-full bg-transparent border-b border-black/10 py-3 text-[11px] uppercase tracking-widest outline-none focus:border-accent">
+                        <button type="submit" class="absolute right-0 bottom-3 text-accent"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                    <p id="newsletter-msg" class="hidden text-[9px] uppercase tracking-widest text-accent mt-3 italic font-medium">Redirection WhatsApp...</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const WHATSAPP_NUMBER = "212770216781";
+        const PRODUCTS = [
+            { id: 1, name: "Bague Nami", desc: "Élégance marine et pureté.", price: 39, image: "https://i.postimg.cc/vZddgjXS/Gemini-Generated-Image-zdtqa6zdtqa6zdtq-Photoroom.png", inStock: true },
+            { id: 2, name: "Bague Chiyo", desc: "Finesse ancestrale et éclat discret.", price: 35, image: "https://i.postimg.cc/Bv0Dzqpy/unnamed-(18)-Photoroom.png", inStock: true },
+            { id: 3, name: "Mini Masque hydratant", desc: "Hydratation instantanée en format voyage.", price: 12, image: "https://i.postimg.cc/LXrxQJC2/unnamed-(20)-Photoroom-(1).png", inStock: true },
+            { id: 4, name: "Collier Kasumi", desc: "Éclat céleste et délicatesse.", price: 45, image: "https://i.postimg.cc/3NG9p3Z1/unnamed-(21)-Photoroom.png", inStock: false },
+            { id: 5, name: "Boucles Selma", desc: "Raffinement pour vos soirées.", price: 39, image: "https://i.postimg.cc/tghXr6Cx/unnamed-(22)-Photoroom.png", inStock: true },
+            { id: 6, name: "Mini Box K-Beauty Avocado", desc: "Nutrition intense et douceur.", price: 59, image: "https://i.postimg.cc/FR3Dk9pk/unnamed-(23)-Photoroom.png", inStock: true },
+            { id: 7, name: "Mini Box K-Beauty Peach", desc: "Éclat fruité et fraîcheur.", price: 59, image: "https://i.postimg.cc/FHzpgbGv/unnamed-(24)-Photoroom.png", inStock: true },
+            { id: 8, name: "Sakura Silk Cream", desc: "L'onctuosité de la soie.", price: 49, image: "https://i.postimg.cc/RZm6vv6X/unnamed-(25)-Photoroom.png", inStock: true },
+            { id: 9, name: "Bague Nouha", desc: "Éclat doré et design contemporain.", price: 39, image: "https://i.postimg.cc/261wgnLC/unnamed-(28)-Photoroom.png", inStock: true }
+        ];
+
+        const app = {
+            cart: JSON.parse(localStorage.getItem('miori_cart_2026')) || [],
+            init() {
+                this.updateCartCount();
+                this.createSakuraPetals();
+                this.renderSlider();
+            },
+            createSakuraPetals() {
+                const container = document.getElementById('sakura-container');
+                setInterval(() => {
+                    const petal = document.createElement('div');
+                    petal.className = 'sakura-petal';
+                    petal.style.left = Math.random() * 100 + 'vw';
+                    const size = Math.random() * 10 + 5;
+                    petal.style.width = size + 'px';
+                    petal.style.height = size + 'px';
+                    petal.style.animationDuration = (Math.random() * 5 + 10) + 's';
+                    container.appendChild(petal);
+                    petal.addEventListener('animationend', () => petal.remove());
+                }, 3000);
+            },
+            toggleMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); },
+            updateCartCount() { document.getElementById('cart-count').innerText = this.cart.reduce((a, b) => a + b.qty, 0); },
+            scrollSlider(dir) {
+                const container = document.getElementById('home-slider');
+                container.scrollBy({ left: dir * container.clientWidth * 0.8, behavior: 'smooth' });
+            },
+            renderSlider() {
+                const slider = document.getElementById('home-slider');
+                slider.innerHTML = PRODUCTS.slice(0, 5).map(p => `
+                    <div class="flex-shrink-0 w-[75vw] md:w-[320px] snap-center cursor-pointer group" onclick="location.href='product.html?id=${p.id}'">
+                        <div class="aspect-[4/5] bg-gray-50 overflow-hidden mb-6 relative">
+                            <img src="${p.image}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" alt="${p.name}">
+                            ${!p.inStock ? '<div class="absolute top-4 right-4 bg-red-50 text-red-500 text-[9px] uppercase tracking-widest px-2 py-1 font-bold">Épuisé</div>' : ''}
+                        </div>
+                        <h3 class="text-[11px] uppercase tracking-[0.3em] font-bold mb-2">${p.name}</h3>
+                        <p class="text-[10px] text-gray-400 font-light mb-3 line-clamp-1">${p.desc}</p>
+                        <p class="text-sm font-light ${!p.inStock ? 'opacity-30' : ''}">${p.price} MAD</p>
+                    </div>
+                `).join('');
+            },
+            submitNewsletter(e) {
+                e.preventDefault();
+                const email = document.getElementById('newsletter-email').value;
+                const whatsappMsg = `Nouvelle inscription à la newsletter MIORI ✨\n\nEmail : ${email}`;
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
+                document.getElementById('newsletter-msg').classList.remove('hidden');
+                document.getElementById('newsletter-email').value = '';
+            }
+        };
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>
